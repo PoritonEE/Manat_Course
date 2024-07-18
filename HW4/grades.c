@@ -254,11 +254,16 @@ int student_print(struct student* student){
     }
     struct iterator* curr=list_begin(student->courses);
     struct course* course;
+    int psik=0;
     printf("%s %d:", student->name, student->ID);
     while( curr!=NULL){
         course=list_get(curr);
         if(course!=NULL){
-            printf(", %s %d", course->name, course->grade);
+            if(psik){
+                printf(",");
+            }
+            psik=1;
+            printf(" %s %d", course->name, course->grade);
         }
         curr=list_next(curr);
     }
