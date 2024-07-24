@@ -5,7 +5,7 @@
 #include "linked-list.h"
 
 enum {Success=0 , FAIL};
-
+//hacah
 typedef struct course{
     char* name;
     int grade;
