@@ -6,6 +6,8 @@
 
 enum {Success=0 , FAIL};
 //hacah
+
+//gau
 typedef struct course{
     char* name;
     int grade;
