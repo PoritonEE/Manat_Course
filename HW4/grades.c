@@ -41,7 +41,7 @@ int clone_courses(void *element, void **output){
         if(!new_course){
             return FAIL;
         }
-    char *p_name=(char *)malloc(strlen(input_element->name)*sizeof(char));
+    char *p_name=(char *)malloc((strlen(input_element->name)+1)*sizeof(char));
     if(!p_name){
         return FAIL;
     }
@@ -67,7 +67,7 @@ int clone_student(void *element, void **output){
         if(!new_student){
             return FAIL;
         }
-    char *p_name=(char *)malloc(strlen(input_element->name)*sizeof(char));
+    char *p_name=(char *)malloc((strlen(input_element->name)+1)*sizeof(char));
     if(!p_name){
         return FAIL;
     }
@@ -148,7 +148,7 @@ int grades_add_student(struct grades *grades, const char *name, int id){
         }
     }
     //create a new studnet
-    char *p_name=(char *)malloc((strlen(name)+1)*sizeof(char));
+    char *p_name=(char *)malloc((strlen(name))*sizeof(char)+1);
     if(p_name== NULL){
         return FAIL;
     }
@@ -168,7 +168,7 @@ int grades_add_grade(struct grades *grades,
                      const char *name, int id, int grade){
     
     if(grades==NULL){
-        return 1;
+        return FAIL;
     }
     struct iterator* curr=list_begin(grades->student_list);
     struct student* curr_student;
@@ -183,11 +183,13 @@ int grades_add_grade(struct grades *grades,
         }
         curr=list_next(curr);
     }
-    return 1;
+    return FAIL;
  }
 
 float grades_calc_avg(struct grades *grades, int id, char **out){
+    //grade invalid
     if(grades==NULL){
+        *out = NULL;
         return -1;
     }
     struct iterator* curr=list_begin(grades->student_list);
@@ -196,6 +198,7 @@ float grades_calc_avg(struct grades *grades, int id, char **out){
     float avg=0;
     float count=0;
     
+    //serach for existed ID
     while(curr!=NULL){
         curr_student=list_get(curr);
         if(curr_student->ID==id){
@@ -205,8 +208,10 @@ float grades_calc_avg(struct grades *grades, int id, char **out){
         curr=list_next(curr);
     }
     if(!found){
+        *out=NULL;
         return -1;
     }
+    
     curr=list_begin(curr_student->courses);
     struct course* curr_course;
     while(curr!=NULL){
@@ -217,6 +222,15 @@ float grades_calc_avg(struct grades *grades, int id, char **out){
         }
         curr=list_next(curr);
     }
+
+//allocating memory for out
+    *out= (char*)malloc((strlen(curr_student->name)+1)*sizeof(char));
+     if(*out == NULL){
+        return -1;
+    }
+    strcpy(*out, curr_student->name);
+
+    //courses are not null
     if(count!=0){
         avg=avg/count;
     }
@@ -232,15 +246,15 @@ float grades_calc_avg(struct grades *grades, int id, char **out){
     }
     //struct iterator* curr=list_begin(student->courses);
      //do we need to check if the course exists? it could appear twice ig
-    int status;
+    int status=0;
     Course new_course;
     new_course.grade=grade;
-    char *p_name=(char *)malloc((strlen(name)+1)*sizeof(char));
+    char *p_name=(char *)malloc((strlen(name)+1)*sizeof(char));    
     new_course.name=p_name;
     strcpy(new_course.name, name);
     status=list_push_back(student->courses, &new_course);
     free(p_name);
-    if (status) {
+    if (status==Success) {
         return Success;
     }
 
@@ -249,21 +263,26 @@ float grades_calc_avg(struct grades *grades, int id, char **out){
  }
 
 int student_print(struct student* student){
-    if(student==NULL){
+ if(student==NULL){
         return FAIL;
     }
     struct iterator* curr=list_begin(student->courses);
     struct course* course;
+    int psik=0;
     printf("%s %d:", student->name, student->ID);
     while( curr!=NULL){
         course=list_get(curr);
         if(course!=NULL){
-            printf(", %s %d", course->name, course->grade);
+            if(psik){
+                printf(",");
+            }
+            psik=1;
+            printf(" %s %d", course->name, course->grade);
         }
         curr=list_next(curr);
     }
     printf("\n");
-    return Success;    
+    return Success;        
 }
 
 int grades_print_student(struct grades* grades, int id){
