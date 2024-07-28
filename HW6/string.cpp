@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include "string.h"
-
+#include "string-array.h"
 
 
         String::String():size(0){
@@ -30,6 +30,8 @@
             //construct string array that will save the data on the heap
           return StringArray(result);
         }
+
+       // StringArray 
 
        // }
          String& String::operator=(const char *str){
@@ -76,12 +78,18 @@
 
 
         }
-        bool String::operator==(const String &other){
-            
+        bool String::operator==(const GenericString &other){
+            String* temp= dynamic_cast<String*>other;
+            int result= strcmp(this->data,temp->data);
+        //  delete temp;
+            return (!result);
+
+
 
         }
         bool String::operator==(const char *other){
-
+                int result= strcmp(this->data, other);
+                return (!result);
         }
         int String::to_integer(){
         // check if the data is empty
@@ -99,11 +107,28 @@
         return number;
         }
 
+        // virtual from generic string
+        // cast generic string into String
         String& String::as_string(){
+            String* str=dynamic_cast<String*>(this);
+            if(str){
+                 return str;
+            }
+            else 
+                return NULL; 
+           
 
         }
-        const String& String::as_string(){
 
+        // virtual from generic string
+        // cast generic string into const String
+        const String& String::as_string(){
+            const String* str=dynamic_cast<const String*>(this);
+            if(str){
+                 return str;
+            }
+            else 
+                return NULL;
         }
         String::~String() {
             delete[] size;
@@ -111,4 +136,3 @@
 
 
 
-//outside
