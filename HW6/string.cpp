@@ -28,8 +28,53 @@
             //implement here the vector
 
             //construct string array that will save the data on the heap
-          return StringArray(result);
-        }
+          //return StringArray(result);
+
+
+          // Ori's implementation: stage 1, count delimiters
+          int delisize=strlen(delimiters);
+         // int place=0;
+         // int last_place=0;
+          int delisum=0;
+         // int push=0;
+          char* token;
+          String local= String(this->data);
+          token= strtok(local,delimiters);
+          while(token!=NULL){
+            delisum++;
+            result.push_back(token);
+            token=strtok(NULL,delimiters);
+          }
+
+         /* 
+          while(this->data[place]!='\0'){
+            if(this->data[place]==delimiters[0])
+            {
+                strtok
+                strcmp(this->data[place],delimiter)
+            }
+          }
+          
+            
+          while(this->data[place]!='\0'){
+            if(exist(this->data[place],delimiters))
+            {
+                
+            }
+          }
+        */
+            StringArray Array=new StringArray(delisum);
+            for(int i=0; i<delisum; i++){
+                String* current= new String(result[i]);
+                current = dynamic_cast<GenericString*>current;
+                //GenericString* current= new String(result[i]);
+                //Array[i]= new String(current);
+                Array[i]= current;
+                //delete current;
+            }
+            return Array;
+
+          }
 
        // StringArray 
 
