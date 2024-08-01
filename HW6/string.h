@@ -6,27 +6,30 @@
 #include "string-array.h"
 
 
-class String : GenericString{
+class String : public GenericString{
     char *data;
     int size;
      
     
     public:
+    //constructors 
+
     String();
     String(const String &str);
     String(const char* str);
-    //---!
-    StringArray split(const char *delimiters);
-     //create this in StringArray.cpp
 
-     String& operator=(const char *str);
-     String& trim();
-     bool operator==(const String &other);
-     bool operator==(const char *other);
-     int to_integer();
-     String& as_string();
-     const String& as_string();
+    //the functions from genericstring
     
+    StringArray split(const char *delimiters) const override;
+    GenericString& operator=(const char *str) override;
+    GenericString& trim() override;
+    bool operator==(const GenericString &other) const override;
+    bool operator==(const char *other) const override;
+    int to_integer() const override;
+    String& as_string() override;
+    const String& as_string() const override;
+    
+    //destructor
     ~String();
 
 };
