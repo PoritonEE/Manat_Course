@@ -1,24 +1,38 @@
 #ifndef STRING_ARRAY_H
 #define STRING__ARRAY_H
-#include <stddef.h>
-#include <iostream>
 #include <vector>
 #include "generic-string.h"
 
 
+
 //will function as an ADT
-class StringArray : GenericString{
+class StringArray {
     //PRAVITE FILDES
-    char** my_string_array;
-    int size;
+    std::vector<GenericString*> *my_string_array;    
     
     public:
-    // the only constructor this class can get
-    StringArray(std::vector<std::string>& vec );
+    // Constructor
+    StringArray();
+    // Copy constructor
+    //StringArray(const StringArray& other);
+    // Copy assignment operator
+    //StringArray& operator=(const StringArray& other);
+    //destructor
     ~StringArray();
-    
 
-    //char* get(const char *str);
-
+    //functions    
+    /**
+     * @brief push a new element.
+     */
+    void Push(GenericString* str);
+     /**
+     * @brief Overloaded operator[] to access elements
+     */ 
+    GenericString* operator[](size_t index) const;
+     /**
+     * @brief Method to get the size of the array
+     */  
+    size_t size() const;    
 };
+
 #endif

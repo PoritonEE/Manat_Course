@@ -58,7 +58,6 @@ String::String(const char* str) {
 // Pure virtual function implementations
 StringArray String::split(const char *delimiters) const {
     std::vector<std::string> result;
-    int delisize = strlen(delimiters);
     int delisum = 0;
     char* token;
     String local(this->data);
@@ -69,11 +68,11 @@ StringArray String::split(const char *delimiters) const {
         token = strtok(NULL, delimiters);
     }
 
-    // Placeholder for StringArray construction, assuming dynamic allocation is correct
-    StringArray Array(delisum);
+    // Create a StringArray object
+    StringArray Array;
     for (int i = 0; i < delisum; ++i) {
         GenericString* current = make_string(result[i].c_str());
-        Array[i] = current;
+        Array.Push(current);
     }
     return Array;
 }
