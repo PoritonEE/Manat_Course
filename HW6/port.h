@@ -11,6 +11,7 @@ enum rule_type { SRC_PORT = 0, DES_PORT  };
 class Port 
 {
     public:
+        Port(const GenericString& value);
         /**
          * @brief Check if the port is accepted by the rule
          * @param packet the whole packet
@@ -23,8 +24,11 @@ class Port
          * @param value the port rule
          * @return true if the port rule is valid, false otherwise
         */
-        Port set_value(const GenericString& value);
+        //Port* Port::set_value(const GenericString& value);
 
+        int detect_type(const GenericString& value);
+        int detect_left_port(const GenericString& value);
+        int detect_right_port(const GenericString& value);
         ~Port() {}
 
         //void set_port_type(String type) { this->type = type; }
