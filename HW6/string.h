@@ -2,6 +2,7 @@
 #define STRING_H
 #include <stddef.h>
 #include <iostream>
+#include <string>
 #include "generic-string.h"
 #include "string-array.h"
 
@@ -28,6 +29,7 @@ class String : public GenericString{
     int to_integer() const override;
     String& as_string() override;
     const String& as_string() const override;
+    
     
     //destructor
     ~String();

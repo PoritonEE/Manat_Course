@@ -1,15 +1,15 @@
 #include "ip.h"
-#include "GenericField"
 
 
 
-bool ip::match(const GenericString& packet) {
+
+bool IP::match(const GenericString& packet) {
 	bool matching = 0;
 	//assumming the packet is valid,
 	// we dont need to check the split size
 	
 	
-		stringArray segments = packet::split(",");
+		StringArray segments = (packet.as_string()).split(",");
 		stringArray ip = segments[this->type]::split("=");
 		int extracted = ip[1]::to_integer();
 		return extracted & maskedIP;
