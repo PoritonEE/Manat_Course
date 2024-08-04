@@ -1,14 +1,13 @@
 #ifndef PORT_H
 #define PORT_H
 
-#include "generic-string.h"
+
 #include "generic-field.h"
-#include "string-array.h"
 #include "string.h"
 
 enum rule_type { SRC_PORT = 0, DES_PORT  };
 
-class Port 
+class Port : public GenericField
 {
     public:
         Port(const GenericString& value);
@@ -17,7 +16,7 @@ class Port
          * @param packet the whole packet
          * @return true if the packet matches the rule (port)
         */
-        bool match(const GenericString& packet);
+        bool match(const GenericString& packet) const override;
 
         /**
          * @brief Set the port rule
@@ -29,7 +28,7 @@ class Port
         int detect_type(const GenericString& value);
         int detect_left_port(const GenericString& value);
         int detect_right_port(const GenericString& value);
-        ~Port() {}
+         ~Port() = default; // Default destructor
 
         //void set_port_type(String type) { this->type = type; }
 

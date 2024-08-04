@@ -2,7 +2,9 @@
 #define STRING_H
 #include <stddef.h>
 #include <iostream>
+#include <cstring>
 #include <string>
+#include <vector>
 #include "generic-string.h"
 #include "string-array.h"
 
@@ -30,6 +32,9 @@ class String : public GenericString{
     String& as_string() override;
     const String& as_string() const override;
     
+    // functions that will help 
+    bool is_src(const GenericString &other);
+    bool is_ip(const GenericString &other);
     
     //destructor
     ~String();

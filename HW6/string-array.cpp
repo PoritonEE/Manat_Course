@@ -1,7 +1,6 @@
     #include "string-array.h"
-    #include <vector>
-    #include <string>
-    #include "generic-string.h"
+    
+   
 
     
     StringArray::StringArray(){

@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-int detect_type(const GenericString& value){
+int Port::detect_type(const GenericString& value){
     int is_des;
     //get a copy of the given value
     
@@ -16,7 +16,7 @@ int detect_type(const GenericString& value){
     return is_des;
 }
 
-int detect_left_port(const GenericString& value){
+int Port::detect_left_port(const GenericString& value){
     int left_port;
     //get a copy of the given value
     
@@ -34,7 +34,7 @@ int detect_left_port(const GenericString& value){
     return left_port;
 }
 
-int detect_right_port(const GenericString& value){
+int Port::detect_right_port(const GenericString& value){
     int right_port;
     //get a copy of the given value
     
@@ -42,11 +42,12 @@ int detect_right_port(const GenericString& value){
     String str_c=String(str);
     GenericString* value_c = &str_c;
     //trim the data
-    str_c.trim();
+    *value_c = str_c.trim();
     //convert to integer
     right_port= str_c.to_integer();
     return right_port;
 }
+
 Port::Port(const GenericString& value){
     
      
@@ -76,7 +77,7 @@ Port::Port(const GenericString& value){
 }
 
 
-bool Port::match(const GenericString& packet){
+bool Port::match(const GenericString& packet) const{
     int port;
     //get a copy of the given value
     
