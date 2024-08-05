@@ -13,8 +13,9 @@ class IP : public GenericField {
          * @param packet the whole packet
          * @return true if the packet matches the rule (port)
         */
-		bool match(const GenericString &packet);
+		bool match(const GenericString &packet) const override;
 		IP(const GenericString* rule);
+		~IP()= default;
 
 
 

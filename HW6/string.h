@@ -32,9 +32,7 @@ class String : public GenericString{
     String& as_string() override;
     const String& as_string() const override;
     
-    // functions that will help 
-    bool is_src(const GenericString &other);
-    bool is_ip(const GenericString &other);
+   
     
     //destructor
     ~String();

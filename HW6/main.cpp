@@ -1,5 +1,5 @@
 
-//#include "ip.h"
+#include "ip.h"
 #include "port.h"
 //#include "input.h"
 
@@ -10,7 +10,7 @@
 
 
 
-bool is_arg_ip(const GenericString &type);
+bool is_ip_rule(const GenericString &type);
 //bool rule_type(String& rule, String& type, String& value);
 
 /**
@@ -22,45 +22,40 @@ bool is_arg_ip(const GenericString &type);
 */
 int main(int argc, char **argv)
 {
+    //checking the correctness of input
+    if (check_args(argc, argv))
+	{
+		return 1;
+	}
+    //check if it is ip or port rule
+    GenericString* rule = make_string(argv[1]);
+    if(is_ip_rule(*rule)){
+        //IP ip_rule= IP(*rule);
+        //you have a problem in your IP file, port works fine
+
+    }else{
+        //setting the rule
+        Port my_port= Port(*rule);
+        //
+    }
+    /*
     const char* str_rule= "des-port=22-22";
     GenericString* rule =make_string(str_rule);
     Port my_port= Port(*rule);
-
-    /*
-    if (check_args(argc, argv) != 0)
-    {
-        return 1;
-    }
-    
-    String arg = String(argv[1]);
-    String type;
-    String value;
-    if (!rule_split_type(arg, type, value)){
-        return 1;
-    }
-    if (is_arg_ip(type))
-    {
-        IP ip;
-        ip.set_ip_type(type);
-        ip.set_value(value);
-        parse_input(ip);
-    }
-    else
-    {
-        Port port;
-        port.set_port_type(type);
-        port.set_value(value);
-        parse_input(port);
-    }
     */
+
+   
     return 0;
 }
 
-bool is_arg_ip(const GenericString &type){
+bool is_ip_rule(const GenericString &type){
     const String& str =type.as_string();
     String str_c=String(str);
     GenericString* value_c = &(str_c.trim());
 
-    StringArray my_type=
-    return true;
+    StringArray my_type= (value_c->as_string()).split("=");
+    value_c =my_type[0];
+    value_c = &(value_c->as_string()).trim();
+    return ((value_c->as_string() == SRC_IP ||
+             value_c->as_string() == DST_IP));
 }
